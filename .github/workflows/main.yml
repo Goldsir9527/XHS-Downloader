@@ -37,6 +37,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt  # 安装项目依赖（核心）
+          pip install fastmcp  # 手动安装缺失的fastmcp库（关键新增）
           pip install pyinstaller  # 安装打包工具
 
       # 步骤4：打包生成可执行文件（关键步骤）
@@ -44,7 +45,7 @@ jobs:
         run: |
           # 找到项目的主入口文件（通常是main.py/xhs_downloader.py，需根据实际文件调整）
           # --onefile：打包成单个可执行文件；--name：指定打包后的文件名
-          pyinstaller --onefile --name XHS-Downloader-${{ matrix.os }} main.py
+          pyinstaller --onefile --name XHS-Downloader-${{ matrix.os }} --hidden-import=fastmcp main.py
         # 如果主入口文件不是main.py，替换成项目实际的入口（比如xhs_downloader.py）
 
       # 步骤5：上传打包后的文件（方便下载）
